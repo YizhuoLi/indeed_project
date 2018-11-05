@@ -13,15 +13,15 @@ class IndeedSpider(scrapy.Spider):
     start_urls = ['https://www.indeed.com/']
 
     def parse(self, response):
-        max_results_per_city = 2200
+        max_results_per_city = 1500
         city_set = ['Miami', 'New+York', 'Chicago', 'San+Francisco', 'Austin', 'Seattle',
                     'Los+Angeles', 'Philadelphia', 'Atlanta', 'Dallas', 'Pittsburgh',
                     'Portland', 'Phoenix', 'Denver', 'Houston', 'Washington+DC', 'Boulder']
 
-        nextPage = True
+
         for city in city_set:
-            for start in range(600, max_results_per_city, 10):
-                    page = 'http://www.indeed.com/jobs?q=data+scientist&l=' + city + '&start=' + str(start)
+            for start in range(0, max_results_per_city, 10):
+                    page = 'http://www.indeed.com/jobs?q=data+analysis&l=' + str(city) + '&start=' + str(start)
                     test = requests.get('https://www.indeed.com/jobs?q=data+scientist&l=Seattle%2C+WA').text
                     if 'np>Next' not in test:
                         yield Request(url=page, callback=self.parse_detail, dont_filter=True)

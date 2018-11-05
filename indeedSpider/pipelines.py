@@ -6,6 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy.exporters import JsonItemExporter
 import pymysql
+from indeedSpider.models.es_types import IndeedType
 
 
 class IndeedspiderPipeline(object):
@@ -38,4 +39,20 @@ class MysqlPipeline(object):
         insert_sql = 'INSERT INTO data_science(job_title, company_name, job_location, job_summary, job_salary) VALUES ("%s", "%s", "%s", "%s", "%s")' % (item["job_title"], item["company_name"], item["job_location"], item["job_summary"], item["job_salary"])
         self.cursor.execute(insert_sql)
         self.conn.commit()
+        return item
+
+class ElasticsearchPipeline(object):
+    #将数据写入es中
+    def process_item(self, item, spider):
+        #将item转化为es的数据
+        indeedData = IndeedType()
+
+        indeedData.job_salary = item['job_salary']
+        indeedData.job_summary = item['job_summary']
+        indeedData.job_location = item['job_location']
+        indeedData.job_title = item['job_title']
+        indeedData.company_name = item['company_name']
+
+        indeedData.save()
+
         return item
