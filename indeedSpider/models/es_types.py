@@ -11,13 +11,11 @@ class IndeedType(Document):
     job_summary = Text(analyzer="ik_max_word")
     job_salary = Text(analyzer="ik_max_word")
     company_name = Text(analyzer="ik_max_word")
+    job_href = Text(analyzer="ik_max_word")
+    job_star = Text(analyzer="ik_max_word")
+    job_review = Text(analyzer="ik_max_word")
 
-    # job_title = Text()
-    # job_location = Text()
-    # job_summary = Text()
-    # job_salary = Text()
-    # company_name = Text()
-    #
+
     class Meta:
         index = "Indeed"
         doc_type = "data_science"

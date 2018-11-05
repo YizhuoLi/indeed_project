@@ -36,7 +36,8 @@ class MysqlPipeline(object):
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
-        insert_sql = 'INSERT INTO data_science(job_title, company_name, job_location, job_summary, job_salary) VALUES ("%s", "%s", "%s", "%s", "%s")' % (item["job_title"], item["company_name"], item["job_location"], item["job_summary"], item["job_salary"])
+        insert_sql = 'INSERT INTO data_science(job_title, company_name, job_location, job_summary, job_salary, job_href, job_star, job_review) VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (item["job_title"], item["company_name"], item["job_location"], item["job_summary"], item["job_salary"], item["job_href"], item["job_star"], item["job_review"])
+        print(insert_sql)
         self.cursor.execute(insert_sql)
         self.conn.commit()
         return item
@@ -52,6 +53,9 @@ class ElasticsearchPipeline(object):
         indeedData.job_location = item['job_location']
         indeedData.job_title = item['job_title']
         indeedData.company_name = item['company_name']
+        indeedData.job_href = item['job_href']
+        indeedData.job_star = item['job_star']
+        indeedData.job_review = item['job_review']
 
         indeedData.save()
 

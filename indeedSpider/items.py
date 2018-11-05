@@ -19,3 +19,6 @@ class IndeedItem(scrapy.Item):
     job_location = scrapy.Field()
     job_summary = scrapy.Field()
     job_salary = scrapy.Field()
+    job_href = scrapy.Field()
+    job_star = scrapy.Field()
+    job_review = scrapy.Field()

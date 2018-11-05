@@ -65,8 +65,8 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'indeedSpider.pipelines.ElasticsearchPipeline': 2,
-   # 'indeedSpider.pipelines.JsonExporterPipeline': 1,
+   # 'indeedSpider.pipelines.ElasticsearchPipeline': 2,
+   'indeedSpider.pipelines.MysqlPipeline': 1,
 }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
