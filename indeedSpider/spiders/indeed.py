@@ -98,7 +98,7 @@ class IndeedSpider(scrapy.Spider):
             #frabing job review num
             try:
                 for g in div.find_all("span", attrs={"class": "slNoUnderline"}):
-                    job_review = (re.findall(r"(.*) reviews", g.string.strip())[0])   # appending job star rate to job_post
+                    job_review = (re.findall(r"(.*) reviews", g.string.strip())[0])   # appending job review rate to job_post
                     indeed_item['job_review'] = job_review
             except:
                 job_review = 'No review'
