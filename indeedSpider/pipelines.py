@@ -5,10 +5,12 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy.exporters import JsonItemExporter
+import redis
 import pymysql
 from indeedSpider.models.es_types import IndeedType
 from elasticsearch_dsl.connections import connections
 es = connections.create_connection(IndeedType)
+redis_cli = redis.StrictRedis()
 
 
 class IndeedspiderPipeline(object):
@@ -81,7 +83,8 @@ class ElasticsearchPipeline(object):
         indeedData.job_review = item['job_review']
 
         indeedData.suggest = gen_suggests("indeed", ((indeedData.job_title, 10), (indeedData.job_location, 9), (indeedData.company_name, 8)))
-
         indeedData.save()
+
+        redis_cli.incr("job_count")
 
         return item
